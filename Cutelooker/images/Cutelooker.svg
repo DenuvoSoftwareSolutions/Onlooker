@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://pixabay.com/vectors/eye-see-viewing-icon-1103593/ -->
+<svg width="800" height="800" version="1.1" viewBox="0 0 800.00001 800.00001" xmlns="http://www.w3.org/2000/svg">
+ <defs>
+  <linearGradient id="c" x1="354.07" x2="-98.137" y1="425.53" y2="862.82" gradientUnits="userSpaceOnUse">
+   <stop stop-opacity=".42" offset="0"/>
+   <stop stop-opacity="0" offset="1"/>
+  </linearGradient>
+  <mask id="b" maskUnits="userSpaceOnUse">
+   <circle cx="400" cy="400" r="400" color="#000000" color-rendering="auto" fill="#fff" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal"/>
+  </mask>
+  <mask id="a" maskUnits="userSpaceOnUse">
+   <circle cx="400" cy="400" r="400" color="#000000" color-rendering="auto" fill="#fff" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal"/>
+  </mask>
+ </defs>
+ <circle cx="400" cy="400" r="400" color="#000000" color-rendering="auto" fill="#1c8adb" image-rendering="auto" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal"/>
+ <path d="m397.93 254.95c-92.013 0.19926-186.18 42.409-282.84 133.69l-106.02 106.02c34.353 168.31 138.81 251.6 279.12 291.41l376.48-376.48c6.7506-6.7594 13.501-13.726 20.252-20.951-90.684-83.885-183.25-130.99-278.09-133.58-2.9637-0.0808-5.9283-0.11776-8.8965-0.11133z" color="#000000" color-rendering="auto" fill="url(#c)" image-rendering="auto" mask="url(#a)" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal"/>
+ <path d="m397.93 254.94c-92.013 0.19926-186.18 42.41-282.84 133.69 189.94 223.23 379.89 203.3 569.83 0-90.684-83.885-183.25-130.99-278.09-133.58-2.9637-0.0808-5.9284-0.11912-8.8966-0.11269zm0.58847 40.319c2.1533-5e-3 4.305 0.0221 6.4551 0.0807 68.801 1.875 135.95 36.048 201.74 96.903-137.79 147.48-275.59 161.94-413.39 0 70.127-66.218 138.44-96.839 205.19-96.983zm2.2134 21.954a85.649 85.649 0 0 0 -85.652 85.654 85.649 85.649 0 0 0 85.652 85.652 85.649 85.649 0 0 0 85.654 -85.652 85.649 85.649 0 0 0 -2.7281 -21.17l-82.926 21.17s35.769-49.672 50.286-69.222a85.649 85.649 0 0 0 -50.286 -16.431z" color="#000000" color-rendering="auto" fill="#fff" image-rendering="auto" mask="url(#b)" shape-rendering="auto" solid-color="#000000" style="isolation:auto;mix-blend-mode:normal"/>
+</svg>

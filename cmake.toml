@@ -1,0 +1,38 @@
+[cmake]
+version = "3.15"
+cmkr-include = "cmake/cmkr.cmake"
+
+[project]
+name = "Onlooker"
+version = "0.1.0"
+include-before = ["cmake/VsConfigurations.cmake"]
+include-after = ["cmake/Qt5Helpers.cmake"]
+
+[conditions]
+qt5 = "Qt5_FOUND"
+
+[find-package.Qt5]
+components = ["Widgets", "PrintSupport"]
+required = false
+
+[target.Cutelooker]
+type = "executable"
+condition = "qt5"
+sources = [
+    "Cutelooker/*.cpp",
+    "Cutelooker/*.h",
+    "Cutelooker/*.ui",
+    "Cutelooker/*.qrc",
+]
+windows.sources = ["Cutelooker/*.rc"]
+link-libraries = ["Qt5::Widgets", "Qt5::PrintSupport"]
+msvc.link-options = ["/SUBSYSTEM:WINDOWS"]
+include-after = ["cmake/Qt5DeployTarget.cmake"]
+
+[target.Onlooker]
+type = "executable"
+condition = "windows"
+sources = [
+    "Onlooker/*.cpp",
+    "Onlooker/*.h",
+]

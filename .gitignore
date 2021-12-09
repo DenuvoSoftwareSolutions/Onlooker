@@ -1,0 +1,5 @@
+build*/
+CMakeLists.txt.user
+.idea/
+cmake-build-*/
+.vs/
