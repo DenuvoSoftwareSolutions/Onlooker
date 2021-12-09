@@ -40,7 +40,7 @@ struct SortedProcess
 
 static void humanReadableSize(size_t sizeInBytes, char* buf, size_t cb)
 {
-    static const char* sizeUnits[] = { "B", "KB", "MB", "GB", "TB", "PT" };
+    static const char* sizeUnits[] = { "B", "KB", "MB", "GB", "TB", "PB" };
 
     size_t sizeType = 0;
     double actualSize = (double)sizeInBytes;
