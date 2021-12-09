@@ -52,7 +52,7 @@ static void humanReadableSize(size_t sizeInBytes, char* buf, size_t cb)
         sizeType++;
     }
 
-    sprintf_s(buf, cb, "%.03f %s", actualSize, sizeUnits[sizeType]);
+    snprintf(buf, cb, "%.03f %s", actualSize, sizeUnits[sizeType]);
 }
 
 static QString humanReadableSize(size_t sizeInBytes)
