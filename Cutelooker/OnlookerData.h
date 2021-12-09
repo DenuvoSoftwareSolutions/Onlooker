@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <tuple>
+#include <iterator>
 
 struct UniqueProcess
 {
@@ -57,6 +58,6 @@ static void humanReadableSize(size_t sizeInBytes, char* buf, size_t cb)
 static QString humanReadableSize(size_t sizeInBytes)
 {
     char temp[128] = "";
-    humanReadableSize(sizeInBytes, temp, _countof(temp));
+    humanReadableSize(sizeInBytes, temp, std::size(temp));
     return temp;
 }
