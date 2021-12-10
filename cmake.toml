@@ -29,6 +29,7 @@ windows.sources = ["Cutelooker/*.rc"]
 link-libraries = ["Qt5::Widgets", "Qt5::PrintSupport"]
 msvc.link-options = ["/SUBSYSTEM:WINDOWS"]
 include-after = ["cmake/Qt5DeployTarget.cmake"]
+compile-features = ["cxx_std_17"]
 
 [target.Onlooker]
 type = "executable"
