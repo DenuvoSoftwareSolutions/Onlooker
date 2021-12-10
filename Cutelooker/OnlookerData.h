@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <tuple>
+#include <iterator>
 
 struct UniqueProcess
 {
@@ -40,7 +41,7 @@ struct SortedProcess
 
 static void humanReadableSize(size_t sizeInBytes, char* buf, size_t cb)
 {
-    static const char* sizeUnits[] = { "B", "KB", "MB", "GB", "TB", "PT" };
+    static const char* sizeUnits[] = { "B", "KB", "MB", "GB", "TB", "PB" };
 
     size_t sizeType = 0;
     double actualSize = (double)sizeInBytes;
@@ -51,12 +52,12 @@ static void humanReadableSize(size_t sizeInBytes, char* buf, size_t cb)
         sizeType++;
     }
 
-    sprintf_s(buf, cb, "%.03f %s", actualSize, sizeUnits[sizeType]);
+    snprintf(buf, cb, "%.03f %s", actualSize, sizeUnits[sizeType]);
 }
 
 static QString humanReadableSize(size_t sizeInBytes)
 {
     char temp[128] = "";
-    humanReadableSize(sizeInBytes, temp, _countof(temp));
+    humanReadableSize(sizeInBytes, temp, std::size(temp));
     return temp;
 }

@@ -18,14 +18,14 @@ And open `build\Onlooker.sln` to build the project. This project uses [cmkr](htt
 
 You should be able to build the Qt GUI on other platforms. `Onlooker` is Windows specific, so you will only be able to view traces.
 
-You need a compiler supporting C++17 (tested with clang 12.0). Then run:
+You need a compiler supporting C++17 (tested with clang 12.0 and GCC 11.2) and the Qt5 development files installed (on Debian/Ubuntu: `apt install qtbase5-dev qt5-qmake qtbase5-dev-tools qtchooser`). Then run:
 
 ```
 cmake -B build -DCMAKE_C_COMPILER=clang-12 -DCMAKE_CXX_COMPILER=clang++-12
 cmake --build build
 ```
 
-Replace `clang-12` and `clang++-12` with a path to your compiler.
+Replace `clang-12` and `clang++-12` with a path to your compiler, or omit if using an up-to-date default compiler.
 
 You can use `-DCMAKE_BUILD_TYPE=Release` to build in release mode.
 
