@@ -94,6 +94,10 @@ if(Qt5_FOUND) # qt5
 
 	source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${Cutelooker_SOURCES})
 
+	target_include_directories(Cutelooker PRIVATE
+		Cutelooker
+	)
+
 	target_link_libraries(Cutelooker PRIVATE
 		Qt5::Widgets
 		Qt5::PrintSupport

@@ -24,6 +24,7 @@ sources = [
     "Cutelooker/*.ui",
     "Cutelooker/*.qrc",
 ]
+include-directories = ["Cutelooker"]
 windows.sources = ["Cutelooker/*.rc"]
 link-libraries = ["Qt5::Widgets", "Qt5::PrintSupport"]
 msvc.link-options = ["/SUBSYSTEM:WINDOWS"]
