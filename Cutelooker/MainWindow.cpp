@@ -212,10 +212,7 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
         sortedProcesses.push_back(s);
     }
     std::sort(sortedProcesses.begin(), sortedProcesses.end());
-    m_sortedProcesses = sortedProcesses = filter(sortedProcesses, [](const SortedProcess& p)
-    {
-        return p.maxMemoryUsage > 100 * 1024 * 1024;
-    });
+    m_sortedProcesses = sortedProcesses;
 
     // populate timeline
     uint64_t startTime = -1;
@@ -319,12 +316,30 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
             const QColor& color = colors[i % colors.size()];
 
             auto bars = new QCPBars(customPlot->xAxis, customPlot->yAxis);
+            bars->setProperty("PID", process.uniqueProcess.pid);
+            bars->setProperty("PPID", process.uniqueProcess.ppid);
             bars->setName(QString("%1 (PID: %2, Parent: %3)").arg(process.uniqueProcess.name).arg(process.uniqueProcess.pid).arg(process.uniqueProcess.ppid));
             bars->setBrush(QBrush(color));
             bars->setPen(QPen(color));
             bars->setWidthType(QCPBars::wtPlotCoords);
             bars->setWidth(1);
             bars->setAntialiased(false);
+            bars->setSelectable(QCP::SelectionType::stSingleData);
+
+            void(QCPBars::* mySelectionChanged)(const QCPDataSelection&) = &QCPBars::selectionChanged;
+            connect(bars, mySelectionChanged, [this, bars](const QCPDataSelection& ds)
+            {
+                if (ds.dataRangeCount() == 0)
+                {
+                    m_selectedGraph = nullptr;
+                }
+                else
+                {
+                    m_selectedGraph = bars;
+                }
+                // TODO: find a better way, this is super delayed
+                overlayCursorChangedSlot(m_lastPos);
+            });
 
             processBars[process.uniqueProcess] = bars;
             if(i > 0)
@@ -361,6 +376,7 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
 
 #define mb(n) (1024ull * 1024 * n)
 #define gb(n) (1024ull * mb(n))
+
         std::vector<uint64_t> sizeJumps =
         {
             mb(1),
@@ -379,11 +395,11 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
             gb(8),
             gb(16),
             gb(32),
+            gb(48),
             gb(64),
+            gb(96),
             gb(128),
         };
-#undef gb
-#undef mb
 
         auto sizeToShow = std::find_if(sizeJumps.begin(), sizeJumps.end(), [maxSum](uint64_t n)
         {
@@ -393,12 +409,15 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
             maxSum = *sizeToShow;
 
         // prepare y
-        customPlot->yAxis->setRange(0, 1024ull * 1024 * 1024 * 64);
+        customPlot->yAxis->setRange(0, maxSum);
         customPlot->yAxis->setLabel(plotPagefile ? "Pagefile usage" : "Memory usage");
         QSharedPointer<MemoryAxisTicker> memoryTicker(new MemoryAxisTicker);
         memoryTicker->setScaleStrategy(MemoryAxisTicker::ssMultiples);
-        memoryTicker->setTickStep(1024 * 1024 * 10);
+        memoryTicker->setTickStep(mb(10)); // 10 mb
         customPlot->yAxis->setTicker(memoryTicker);
+
+#undef gb
+#undef mb
 
         // add data
         for(const auto& process : sortedProcesses)
@@ -407,13 +426,14 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
         }
 
         // setup legend:
-        customPlot->legend->setVisible(true);
+        customPlot->legend->setVisible(false);
         customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignLeft);
         customPlot->legend->setBrush(QColor(255, 255, 255, 100));
         customPlot->legend->setBorderPen(Qt::NoPen);
         QFont legendFont = font();
         legendFont.setPointSize(10);
         customPlot->legend->setFont(legendFont);
+        customPlot->setInteraction(QCP::Interaction::iSelectPlottables);
 
         customPlot->installEventFilter(m_overlay);
         setCentralWidget(customPlot);
@@ -447,8 +467,16 @@ bool MainWindow::getPlotPagefileSetting() const
 
 void MainWindow::overlayCursorChangedSlot(QPoint pos)
 {
+    m_lastPos = pos;
     if(m_customPlot)
     {
+        DWORD selectedPid = 0, selectedPpid = 0;
+        if (m_selectedGraph)
+        {
+            selectedPid = m_selectedGraph->property("PID").toUInt();
+            selectedPpid = m_selectedGraph->property("PPID").toUInt();
+        }
+        
         auto coord = m_customPlot->xAxis->pixelToCoord(pos.x());
         coord = std::round(coord);
         if(coord >= 0 && coord < m_times.size())
@@ -475,6 +503,9 @@ void MainWindow::overlayCursorChangedSlot(QPoint pos)
                     pagefileUsageSum += data.pagefileUsage;
                     if(info.size())
                         info += "\n";
+                    auto selected = up.pid == selectedPid && up.ppid == selectedPpid;
+                    if (selected)
+                        info += "<b>";
                     info += QString("%1 (PID: %2, Parent: %3):\n  Memory usage: %4\n  Pagefile usage: %5 (%6)\n  CPU: %7\n")
                             .arg(up.name)
                             .arg(up.pid)
@@ -483,6 +514,8 @@ void MainWindow::overlayCursorChangedSlot(QPoint pos)
                             .arg(humanReadableSize(data.pagefileUsage))
                             .arg(humanReadableSize((data.pagefileUsage >= data.memoryUsage) * (data.pagefileUsage - data.memoryUsage)))
                             .arg(QString::number(data.cpuUsage, 'f', 3));
+                    if (selected)
+                        info += "</b>";
                 }
                 info+= QString("\nTotal memory usage: %1\nTotal pagefile usage: %2 (%3)")
                         .arg(humanReadableSize(memoryUsageSum))

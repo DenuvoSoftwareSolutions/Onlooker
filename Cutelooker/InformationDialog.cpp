@@ -18,5 +18,8 @@ InformationDialog::~InformationDialog()
 
 void InformationDialog::setInformationText(const QString& text)
 {
-    ui->informationTextEdit->setPlainText(text);
+    auto html = text;
+    html.replace(" ", "&nbsp;");
+    html.replace("\n", "<br>");
+    ui->informationTextEdit->setHtml(html);
 }

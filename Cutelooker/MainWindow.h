@@ -48,6 +48,8 @@ private:
     bool m_allowLogSelectionEvent = true;
     bool m_hasOpenedInformation = false;
     QString m_windowTitle;
+    QCPBars* m_selectedGraph = nullptr;
+    QPoint m_lastPos;
 
     std::vector<SortedProcess> m_sortedProcesses;
     std::map<uint64_t, std::map<UniqueProcess, ProcessData>> m_timeline;
