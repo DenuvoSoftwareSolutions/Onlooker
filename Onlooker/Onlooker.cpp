@@ -529,7 +529,14 @@ static DWORD WINAPI MonitoringThread(LPVOID param)
 
 	ProcessTimeSeries timeSeries(logFile);
 
-	const DWORD pollInterval = 100;
+	DWORD pollInterval = 100;
+	char szPollInterval[32] = "";
+	if (GetEnvironmentVariableA("ONLOOKER_POLL_INTERVAL", szPollInterval, std::size(szPollInterval)) && *szPollInterval)
+	{
+		if (sscanf(szPollInterval, "%u", &pollInterval) != 1)
+			pollInterval = 100;
+	}
+
 	while (!bStopMonitoringThread)
 	{
 		DWORD ticks = GetTickCount();
