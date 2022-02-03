@@ -49,6 +49,7 @@ bool LogDialog::loadLogJson(const QString& jsonFile)
         QMessageBox::warning(this, tr("Error"), tr("Unexpected data format"));
         return false;
     }
+    // TODO: detect time drift
     std::map<uint64_t, QStringList> log;
     QJsonObject obj = json.object();
     for(const QString& key : obj.keys())

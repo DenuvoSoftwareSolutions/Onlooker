@@ -368,56 +368,21 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
         }
         m_times = times;
 
-        // prepare x
+        // prepare x axis
         customPlot->xAxis->setRange(0, xx);
         customPlot->xAxis->setLabel("Time");
         QSharedPointer<TimeAxisTicker> timeTicker(new TimeAxisTicker(times));
         customPlot->xAxis->setTicker(timeTicker);
 
-#define mb(n) (1024ull * 1024 * n)
-#define gb(n) (1024ull * mb(n))
-
-        std::vector<uint64_t> sizeJumps =
-        {
-            mb(1),
-            mb(2),
-            mb(4),
-            mb(8),
-            mb(16),
-            mb(32),
-            mb(64),
-            mb(128),
-            mb(256),
-            mb(512),
-            gb(1),
-            gb(2),
-            gb(4),
-            gb(8),
-            gb(16),
-            gb(32),
-            gb(48),
-            gb(64),
-            gb(96),
-            gb(128),
-        };
-
-        auto sizeToShow = std::find_if(sizeJumps.begin(), sizeJumps.end(), [maxSum](uint64_t n)
-        {
-            return n > maxSum;
-        });
-        if(sizeToShow != sizeJumps.end())
-            maxSum = *sizeToShow;
-
-        // prepare y
+        // prepare y axis
         customPlot->yAxis->setRange(0, maxSum);
         customPlot->yAxis->setLabel(plotPagefile ? "Pagefile usage" : "Memory usage");
         QSharedPointer<MemoryAxisTicker> memoryTicker(new MemoryAxisTicker);
         memoryTicker->setScaleStrategy(MemoryAxisTicker::ssMultiples);
-        memoryTicker->setTickStep(mb(10)); // 10 mb
+        memoryTicker->setTickStep(1024ull * 1024 * 10); // 10 mb
+        auto tickStep = memoryTicker->getTickStep(QCPRange(0, maxSum));
+        customPlot->yAxis->setRange(0, std::ceil(maxSum / tickStep) * tickStep);
         customPlot->yAxis->setTicker(memoryTicker);
-
-#undef gb
-#undef mb
 
         // add data
         for(const auto& process : sortedProcesses)
@@ -425,16 +390,17 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
             processBars[process.uniqueProcess]->setData(ticks, processBarData[process.uniqueProcess], true);
         }
 
-        // setup legend:
-        customPlot->legend->setVisible(false);
+        // setup legend
+        customPlot->legend->setVisible(false); // TODO: make menu to toggle the legend
         customPlot->axisRect()->insetLayout()->setInsetAlignment(0, Qt::AlignTop|Qt::AlignLeft);
         customPlot->legend->setBrush(QColor(255, 255, 255, 100));
         customPlot->legend->setBorderPen(Qt::NoPen);
         QFont legendFont = font();
         legendFont.setPointSize(10);
         customPlot->legend->setFont(legendFont);
+        
+        // selection
         customPlot->setInteraction(QCP::Interaction::iSelectPlottables);
-
         customPlot->installEventFilter(m_overlay);
         setCentralWidget(customPlot);
     }
