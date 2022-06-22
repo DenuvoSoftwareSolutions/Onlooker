@@ -308,6 +308,7 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
         }
 
         auto customPlot = m_customPlot = new QCustomPlot(this);
+        customPlot->setInteraction(QCP::Interaction::iRangeZoom);
 
         std::map<UniqueProcess, QCPBars*> processBars;
         for(size_t i = 0; i < sortedProcesses.size(); i++)

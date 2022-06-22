@@ -10,6 +10,7 @@ int main(int argc, char* argv[])
     // Enable UTF-8 support in the MSVC runtime
     // https://docs.microsoft.com/en-us/cpp/c-runtime-library/reference/setlocale-wsetlocale?view=msvc-160#utf-8-support
     setlocale(LC_ALL, ".utf8");
+    setlocale(LC_NUMERIC, "C");
 #endif // _UCRT
 
     // Disable buffering because stdout/stderr are only used for debugging
