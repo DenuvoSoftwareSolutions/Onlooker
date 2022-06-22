@@ -421,7 +421,12 @@ again:
 #undef NEXT_PROCESS
 
 				for (const auto& process : processList)
+				{
+					// Child started before the parent -> not a real parent
+					if (processes.count(process.ppid) && processes.at(process.pid)->CreateTime.QuadPart < processes.at(process.ppid)->CreateTime.QuadPart)
+						continue;
 					tree[process.ppid].push_back(process.pid);
+				}
 
 				if (processList != processListCache)
 				{
