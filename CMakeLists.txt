@@ -151,3 +151,37 @@ if(WIN32) # windows
 	unset(CMKR_SOURCES)
 endif()
 
+# Target Reproduction
+set(CMKR_TARGET Reproduction)
+set(Reproduction_SOURCES "")
+
+list(APPEND Reproduction_SOURCES
+	"Reproduction/Reproduction.cpp"
+	"Reproduction/regexmagic.h"
+)
+
+list(APPEND Reproduction_SOURCES
+	cmake.toml
+)
+
+set(CMKR_SOURCES ${Reproduction_SOURCES})
+add_executable(Reproduction)
+
+if(Reproduction_SOURCES)
+	target_sources(Reproduction PRIVATE ${Reproduction_SOURCES})
+endif()
+
+get_directory_property(CMKR_VS_STARTUP_PROJECT DIRECTORY ${PROJECT_SOURCE_DIR} DEFINITION VS_STARTUP_PROJECT)
+if(NOT CMKR_VS_STARTUP_PROJECT)
+	set_property(DIRECTORY ${PROJECT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT Reproduction)
+endif()
+
+source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${Reproduction_SOURCES})
+
+target_compile_features(Reproduction PRIVATE
+	cxx_std_17
+)
+
+unset(CMKR_TARGET)
+unset(CMKR_SOURCES)
+

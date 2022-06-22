@@ -38,3 +38,11 @@ sources = [
     "Onlooker/*.cpp",
     "Onlooker/*.h",
 ]
+
+[target.Reproduction]
+type = "executable"
+sources = [
+    "Reproduction/*.cpp",
+    "Reproduction/*.h",
+]
+compile-features = ["cxx_std_17"]
