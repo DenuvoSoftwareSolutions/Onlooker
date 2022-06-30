@@ -305,6 +305,7 @@ void MainWindow::loadJsonChart(const QString& jsonFile)
             m_informationDialog->setInformationText(QString());
             delete m_customPlot;
             m_customPlot = nullptr;
+            m_selectedGraph = nullptr;
         }
 
         auto customPlot = m_customPlot = new QCustomPlot(this);
@@ -440,8 +441,13 @@ void MainWindow::overlayCursorChangedSlot(QPoint pos)
         uint32_t selectedPid = 0, selectedPpid = 0;
         if (m_selectedGraph)
         {
-            selectedPid = m_selectedGraph->property("PID").toUInt();
-            selectedPpid = m_selectedGraph->property("PPID").toUInt();
+            auto pidProp = m_selectedGraph->property("PID");
+            auto ppidProp = m_selectedGraph->property("PPID");
+            if (pidProp.type() == QVariant::UInt && ppidProp.type() == QVariant::UInt)
+            {
+                selectedPid = pidProp.toUInt();
+                selectedPpid = ppidProp.toUInt();
+            }
         }
 
         auto coord = m_customPlot->xAxis->pixelToCoord(pos.x());
