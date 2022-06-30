@@ -437,13 +437,13 @@ void MainWindow::overlayCursorChangedSlot(QPoint pos)
     m_lastPos = pos;
     if(m_customPlot)
     {
-        DWORD selectedPid = 0, selectedPpid = 0;
+        uint32_t selectedPid = 0, selectedPpid = 0;
         if (m_selectedGraph)
         {
             selectedPid = m_selectedGraph->property("PID").toUInt();
             selectedPpid = m_selectedGraph->property("PPID").toUInt();
         }
-        
+
         auto coord = m_customPlot->xAxis->pixelToCoord(pos.x());
         coord = std::round(coord);
         if(coord >= 0 && coord < m_times.size())
