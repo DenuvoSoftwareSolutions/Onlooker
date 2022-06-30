@@ -38,3 +38,4 @@ sources = [
     "Onlooker/*.cpp",
     "Onlooker/*.h",
 ]
+properties = { MSVC_RUNTIME_LIBRARY = "MultiThreaded$<$<CONFIG:Debug>:Debug>" }

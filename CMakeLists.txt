@@ -147,6 +147,11 @@ if(WIN32) # windows
 
 	source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${Onlooker_SOURCES})
 
+	set_target_properties(Onlooker PROPERTIES
+		MSVC_RUNTIME_LIBRARY
+			"MultiThreaded$<$<CONFIG:Debug>:Debug>"
+	)
+
 	unset(CMKR_TARGET)
 	unset(CMKR_SOURCES)
 endif()
