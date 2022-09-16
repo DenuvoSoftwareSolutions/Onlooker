@@ -1,6 +1,17 @@
 # Onlooker
 
-Onlooker is a simple memory profiler for Windows. It allows you to record memory statistics for a process tree similar to the Linux `time` command.
+Onlooker is a simple memory profiler for Windows. It allows you to record memory statistics for a process tree similar to the Linux `time` command. For example:
+```
+> Onlooker.exe my.exe arguments
+```
+
+Onlooker acts like a wrapper for `my.exe` and keeps track of the memory usage of all child processes. When `my.exe` terminates, the time series is saved in a JSON trace file.
+
+Additionally you can attach Onlooker to an existing process:
+
+```
+> Onlooker.exe :attach <pid>
+```
 
 Cutelooker is a GUI for Onlooker traces written in Qt. It also allows you to link the memory trace with a log file.
 
@@ -32,3 +43,10 @@ You can use `-DCMAKE_BUILD_TYPE=Release` to build in release mode.
 ## Log file format
 
 TODO: discuss how to write a log converter
+
+## License
+
+Onlooker is available under the permissive [BSL-1.0](https://choosealicense.com/licenses/bsl-1.0/) license.
+Cutelooker is available under [GPLv3](https://choosealicense.com/licenses/gpl-3.0/) license.
+
+Cutelooker uses [QCustomPlot](http://www.qcustomplot.com/) version 2.0.1 by Emanuel Eichhammer.
