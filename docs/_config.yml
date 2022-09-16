@@ -1,0 +1,15 @@
+title: "Onlooker & Cutelooker"
+author:
+  name: ""
+description: ""
+remote_theme: jekyll/minima
+
+header_pages:
+  - ""
+
+minima:
+  # generate social links in footer
+  social_links:
+    twitter: gamingatdenuvo
+    github:  denuvosoftwaresolutions
+    linkedincompany: denuvo-gmbh
