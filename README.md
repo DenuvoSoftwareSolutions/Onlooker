@@ -15,6 +15,8 @@ Additionally you can attach Onlooker to an existing process:
 
 Cutelooker is a GUI for Onlooker traces written in Qt. It also allows you to link the memory trace with a log file.
 
+An [post introducing Onlooker and Cutelooker](https://denuvosoftwaresolutions.github.io/Onlooker/intro.html) was published September 16, 2022.
+
 ## Building (Windows)
 
 You need Visual Studio 2019 or higher and [CMake 3.15](https://cmake.org/download/) or higher. Then run:
@@ -42,7 +44,20 @@ You can use `-DCMAKE_BUILD_TYPE=Release` to build in release mode.
 
 ## Log file format
 
-TODO: discuss how to write a log converter
+A key feature is that you can link your application's logs to the timeline Cutelooker visualizes. When you update the selection in Cutelooker, you can see immediately see what your application was doing at that time.
+
+The log format is JSON:
+
+```json
+{
+  "1643811426000": ["first message", "second message"],
+  "1643811427000": ["a second later"]
+}
+```
+
+The key is the number of _milliseconds_ since epoch (UTC) as a string and the value is a list of log lines that happened at this time.
+
+After loading this JSON log in Cutelooker UI, the selection of the graph automatically scrolls to the relevant log line and vice versa.
 
 ## License
 
