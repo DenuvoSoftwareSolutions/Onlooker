@@ -13,7 +13,7 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: convert.py trace.json")
         sys.exit(1)
-    
+
     infile = sys.argv[1]
     outfile = get_output_name(infile)
     outlog = {}
@@ -47,7 +47,7 @@ def main():
                 curfile = file
                 appendlog(time, file + ":" + str(entry['line']))
             appendlog(time, "  " + prettycmd(entry["cmd"], entry["args"]))
-    
+
     with open(outfile, "w") as f:
         json.dump(outlog, f, indent=2)
     with open(outfile + ".txt", "w") as f:
