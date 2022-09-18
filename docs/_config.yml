@@ -10,6 +10,8 @@ defaults:
       path: ""
     values:
       layout: default
+      image: https://denuvosoftwaresolutions.github.io/Onlooker/Cutelooker-example.png
+      description: "Simple memory profiler for Windows."
 
 header_pages:
   - ""
