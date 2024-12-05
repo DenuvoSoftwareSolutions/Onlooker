@@ -2,7 +2,6 @@
   <data class="u-url" href="{{ "/" | relative_url }}"></data>
 
   <div class="wrapper">
-<!--
     <div class="footer-col-wrapper">
       <div class="footer-col">
       {%- if site.author %}
@@ -17,12 +16,11 @@
       {%- endif %}
       </div>
       <div class="footer-col">
-      {%- if site.description %}
-        <p>{{ site.description | escape }}</p>
+      {%- if site.bio %}
+        <p>{{ site.bio | escape }}</p>
       {%- endif %}
       </div>
     </div>
--->
     <div class="social-links">
       {%- include social.html -%}
     </div>

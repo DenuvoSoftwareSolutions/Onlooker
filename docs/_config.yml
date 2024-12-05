@@ -1,7 +1,7 @@
 title: "Onlooker & Cutelooker"
 author:
-  name: ""
-description: ""
+  name: "Anti-Tamper Team @ Denuvo"
+description: "Simple memory profiler for Windows"
 remote_theme: jekyll/minima@v2.5.2
 
 defaults:
@@ -11,10 +11,10 @@ defaults:
     values:
       layout: default
       image: https://denuvosoftwaresolutions.github.io/Onlooker/Cutelooker-example.png
-      description: "Simple memory profiler for Windows."
+      description: "Simple memory profiler for Windows"
 
 header_pages:
-  - ""
+  -
 
 minima:
   # generate social links in footer
@@ -22,3 +22,8 @@ minima:
     twitter: gamingatdenuvo
     github:  denuvosoftwaresolutions
     linkedincompany: denuvo-gmbh
+
+plugins:
+  - jekyll-default-layout
+  - jekyll-remote-theme
+  - jekyll-optional-front-matter
