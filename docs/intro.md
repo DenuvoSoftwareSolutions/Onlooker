@@ -1,6 +1,7 @@
 # Introducing Onlooker & Cutelooker
 
-September 16, 2022
+September 16, 2022; &copy; Denuvo GmbH
+
 
 ## Problem description
 

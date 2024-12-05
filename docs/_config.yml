@@ -2,7 +2,7 @@ title: "Onlooker & Cutelooker"
 author:
   name: ""
 description: ""
-remote_theme: jekyll/minima
+remote_theme: jekyll/minima@v2.5.2
 
 defaults:
   -
